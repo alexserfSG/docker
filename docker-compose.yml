@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:stable
+    container_name: nginx_cont
+    ports:
+      - "80:80"
+    volumes:
+      - './nginx/config:/etc/nginx/conf.d'
+      - './src:/var/www/html'
+    networks:
+      - app-network
+
+  #Контейнер с PHP-FPM
+  php:
+    image: php:8.2-fpm
+    container_name: php_cont # имя контейнера после запуска
+    volumes:
+      - './fpm:/usr/local/etc/php'
+#      - './src:/var/www/html'
+    # мы можем создать для контейнеров внутреннюю сеть
+    networks:
+      - app-network
+#
+#  mysql:
+#    image: mysql:stable
+
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
