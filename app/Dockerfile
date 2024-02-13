@@ -27,7 +27,7 @@ RUN apt-get update && apt-get install -y \
 
 
 COPY ./php.ini /usr/local/etc/php/conf.d/php-custom.ini
-COPY ./zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf
+#COPY ./zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf
 
 WORKDIR /data
 

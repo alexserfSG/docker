@@ -26,7 +26,8 @@ services:
     volumes:
       - ./data:/data/test.local
       - ./logs/php:/var/log/php
-      - ./app/sock:/sock
+      - "phpsocket:/var/run"
+#      - ./app/sock:/sock
     networks:
       - app-network
 
