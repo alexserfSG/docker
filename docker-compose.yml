@@ -12,7 +12,7 @@ services:
     volumes:
       - ./data:/data/test.local
       - ./logs/nginx:/var/log/nginx
-      - "phpsocket:/var/run"
+      - "phpsocket:/var/run/php-fpm"
     networks:
       - app-network
   app:
@@ -26,7 +26,7 @@ services:
     volumes:
       - ./data:/data/test.local
       - ./logs/php:/var/log/php
-      - "phpsocket:/var/run"
+      - "phpsocket:/var/run/php-fpm"
 #      - ./app/sock:/sock
     networks:
       - app-network
