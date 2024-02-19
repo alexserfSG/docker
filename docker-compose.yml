@@ -1,6 +1,7 @@
 version: '3'
 
 services:
+
   nginx:
     build:
       context: ./nginx
@@ -15,6 +16,7 @@ services:
       - "phpsocket:/var/run/php-fpm"
     networks:
       - app-network
+
   app:
     build:
       context: ./app
@@ -27,13 +29,22 @@ services:
       - "phpsocket:/var/run/php-fpm"
     networks:
       - app-network
-#    depends_on:
-#      - redis
-  db:
-    image: mysql
-    restart: always
+
+  mysql_db:
+    image: mysql:8
+    #restart: always
+    ports:
+      - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: example
+      MYSQL_ROOT_PASSWORD: root_secret
+      MYSQL_DATABASE: db_docker
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: docker_pass
+    volumes:
+      - ./db:/var/lib/mysql
+    networks:
+      - app-network
+
   redis:
     image: redis:alpine
     container_name: redis
@@ -42,6 +53,7 @@ services:
       - 6379
     networks:
       - app-network
+
   memcached:
     image: memcached:1.6.17-alpine
     container_name: memcached
@@ -50,7 +62,6 @@ services:
       - 11211
     networks:
       - app-network
-
 
 networks:
   app-network:
