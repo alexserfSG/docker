@@ -1,4 +1,3 @@
 logs/**
 .idea
-db/**
-!db/db_docker
+
