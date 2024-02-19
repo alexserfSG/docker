@@ -27,16 +27,30 @@ services:
       - "phpsocket:/var/run/php-fpm"
     networks:
       - app-network
-
-  redis:
-    image: redis
+#    depends_on:
+#      - redis
+  db:
+    image: mysql
     restart: always
-    ports:
-      - 6379:6379
-    logging:
-      driver: none
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+  redis:
+    image: redis:alpine
+    container_name: redis
+    hostname: 'redis'
+    expose:
+      - 6379
     networks:
       - app-network
+  memcached:
+    image: memcached:1.6.17-alpine
+    container_name: memcached
+    command: ["-m", "2048"]
+    expose:
+      - 11211
+    networks:
+      - app-network
+
 
 networks:
   app-network:
